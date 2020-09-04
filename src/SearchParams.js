@@ -7,6 +7,16 @@ const SearchParams = () => {
   const [breeds, updateBreeds] = useState([]);
   const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
   const [breed, BreedDropdown, updateBreed] = useDropdown("Breed", "", breeds);
+
+  useEffect(() => {
+    updateBreeds([]);
+    updateBreed("");
+    pet.breeds(animal).then(({ breeds }) => {
+      const breedStrings = breeds.map(({ name }) => name);
+      updateBreeds(breedStrings);
+    }, console.error);
+  }, [animal, updateBreeds, updateBreed]);
+  
   return (
     <div className="search-params">
        
